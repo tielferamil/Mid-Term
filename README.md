@@ -11,4 +11,4 @@ Also rhe user enters steak for 350 calories.
 It then saves the data under food log where the user can edit and delete the food if mistakes were made.
 The app also shows the amount of total calories put in.
 Also it shows the percentage of how much progress they made for their calorie goal.
-##To run the website you need a static folder and style.css goes into that.
+## To run the website you need a static folder and style.css goes into that.
