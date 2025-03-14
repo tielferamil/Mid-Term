@@ -16,9 +16,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# serve static files (css)
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
 
 # data model for a food item
 class FoodItem(BaseModel):
