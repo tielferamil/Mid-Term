@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>Calorie Tracker</h1>
+    <h1>NutriTrack</h1>
 
     <div class="container">
         <!-- left side -->
@@ -32,8 +32,8 @@
         <div class="right-column">
             <h2>Calorie Intake</h2>
             <div class="calorie-stats">
-                <p>Total Calories Consumed: <span id="totalCalories">0</span></p>
-                <p>Percentage of Daily Target: <span id="caloriePercentage">Set a target to see percentage</span></p>
+                <p><b>Total Calories Consumed:</b> <span id="totalCalories"></span></p>
+                <p><b>Percentage of Daily Target:</b> <span id="caloriePercentage">Set a target to see percentage</span></p>
             </div>
             <div class="food-log-container">
                 <h2>Food Log</h2>
@@ -110,7 +110,9 @@
                 return;
             }
 
-            const name = document.getElementById('foodName').value;
+            let name = document.getElementById('foodName').value;
+            name = name.charAt(0).toUpperCase() + name.slice(1);
+            
             const calories = document.getElementById('foodCalories').value;
 
             if (editingFoodId !== null) {
