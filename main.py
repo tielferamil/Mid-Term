@@ -37,7 +37,7 @@ calorie_data = CalorieData()
 # serve the frontend HTML file
 @app.get("/", response_class=HTMLResponse)
 def serve_frontend():
-    with open("index.html", "r") as file:
+    with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read())
 
 
