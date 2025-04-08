@@ -10,9 +10,32 @@ body {
     align-items: center;
 }
 
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    gap: 20px;
+}
+
+.left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 h1 {
     color: #2c3e50;
     margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
 }
 
 h2 {
@@ -58,6 +81,16 @@ button:hover {
 }
 
 /* Calorie Intake Display */
+.calorie-stats {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
 #totalCalories,
 #caloriePercentage {
     font-weight: bold;
@@ -65,11 +98,15 @@ button:hover {
 }
 
 /* Food Log Styles */
+.food-log-container {
+    width: 100%;
+    max-width: 400px;
+}
+
 #foodList {
     list-style-type: none;
     padding: 0;
     width: 100%;
-    max-width: 400px;
 }
 
 #foodList li {
@@ -106,7 +143,11 @@ button:hover {
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 800px) {
+    .container {
+        flex-direction: column;
+    }
+    
     body {
         padding: 10px;
     }

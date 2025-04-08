@@ -11,24 +11,37 @@
 <body>
     <h1>Calorie Tracker</h1>
 
-    <form id="calorieForm">
-        <input type="number" id="calorieTarget" placeholder="Daily Calorie Target" required />
-        <button type="button" onclick="setCalorieTarget()">Set Target</button>
-    </form>
+    <div class="container">
+        <!-- left side -->
+        <div class="left-column">
+            <h2>Set Daily Calorie Target</h2>
+            <form id="calorieForm">
+                <input type="number" id="calorieTarget" placeholder="Daily Calorie Target" required />
+                <button type="button" onclick="setCalorieTarget()">Set Target</button>
+            </form>
 
-    <h2>Log Food</h2>
-    <form id="foodForm">
-        <input type="text" id="foodName" placeholder="Food Name" required />
-        <input type="number" id="foodCalories" placeholder="Calories" required />
-        <button type="button" onclick="logFood()">Log Food</button>
-    </form>
+            <h2>Log Food</h2>
+            <form id="foodForm">
+                <input type="text" id="foodName" placeholder="Food Name" required />
+                <input type="number" id="foodCalories" placeholder="Calories" required />
+                <button type="button" onclick="logFood()">Log Food</button>
+            </form>
+        </div>
 
-    <h2>Calorie Intake</h2>
-    <p>Total Calories Consumed: <span id="totalCalories">0</span></p>
-    <p>Percentage of Daily Target: <span id="caloriePercentage">Set a target to see percentage</span></p>
-
-    <h2>Food Log</h2>
-    <ul id="foodList"></ul>
+        <!-- right side -->
+        <div class="right-column">
+            <h2>Calorie Intake</h2>
+            <div class="calorie-stats">
+                <p>Total Calories Consumed: <span id="totalCalories">0</span></p>
+                <p>Percentage of Daily Target: <span id="caloriePercentage">Set a target to see percentage</span></p>
+            </div>
+            <div class="food-log-container">
+                <h2>Food Log</h2>
+                <ul id="foodList"></ul>
+            </div>
+            
+        </div>
+    </div>
 
     <script>
         const apiUrl = "http://localhost:8000/calories/";
@@ -60,12 +73,14 @@
                 //adds Edit button
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Edit';
+                editButton.classList.add('edit');
                 editButton.onclick = () => editFood(index, food.name, food.calories);
                 li.appendChild(editButton);
 
                 //adds delete button
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
+                deleteButton.classList.add('delete');
                 deleteButton.onclick = () => deleteFood(index);
                 li.appendChild(deleteButton);
 
