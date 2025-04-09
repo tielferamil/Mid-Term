@@ -124,10 +124,15 @@ button:hover {
     align-items: center;
 }
 
+#foodList li .button-container {
+    margin-left: auto;
+    display: flex;
+    gap: 5px;
+}
+
 #foodList li button {
     padding: 5px 10px;
     font-size: 14px;
-    margin-left: 5px;
     width: auto; 
 }
 
@@ -146,6 +151,7 @@ button:hover {
 #foodList li button.delete:hover {
     background-color: #c0392b;
 }
+
 
 /* Responsive Design */
 @media (max-width: 800px) {

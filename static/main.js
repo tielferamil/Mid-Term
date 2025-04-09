@@ -22,24 +22,26 @@ async function fetchCalories() {
     foodList.innerHTML = '';
     data.foods.forEach((food, index) => {
         const li = document.createElement('li');
-        li.innerHTML = `<b>${food.name}</b> ${food.calories} Calories`;
-
-        //adds Edit button
+        li.innerHTML = `<b>${food.name}</b> &nbsp- ${food.calories} Calories`;
+    
+        const buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('button-container');
+    
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
         editButton.classList.add('edit');
         editButton.onclick = () => editFood(index, food.name, food.calories);
-        li.appendChild(editButton);
-
-        //adds delete button
+        buttonContainer.appendChild(editButton);
+    
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('delete');
         deleteButton.onclick = () => deleteFood(index);
-        li.appendChild(deleteButton);
-
+        buttonContainer.appendChild(deleteButton);
+    
+        li.appendChild(buttonContainer);
         foodList.appendChild(li);
-    });
+    });    
 }
 
 //sets the daily calorie target
