@@ -37,6 +37,24 @@ calorie_data = CalorieData()
 def serve_frontend():
     with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read())
+    
+# serve the goals page
+@app.get("/goals", response_class=HTMLResponse)
+def serve_goals_page():
+    with open("frontend/goals.html", "r") as file:
+        return HTMLResponse(content=file.read())
+    
+# serve the recipes page
+@app.get("/recipes", response_class=HTMLResponse)
+def serve_goals_page():
+    with open("frontend/recipes.html", "r") as file:
+        return HTMLResponse(content=file.read())
+
+# serve the profile page
+@app.get("/profile", response_class=HTMLResponse)
+def serve_goals_page():
+    with open("frontend/profile.html", "r") as file:
+        return HTMLResponse(content=file.read())
 
 # sets the daily calorie target
 @app.post("/calories/target")
