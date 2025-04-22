@@ -2,6 +2,14 @@ const apiUrl = "http://localhost:8000/calories/";
 let dailyTarget = 0; //tracks the daily calorie target
 let editingFoodId = null; //tracks which food item is being edited
 
+//modal ref
+let foodDetailsModal;
+
+//initializes the modal
+document.addEventListener('DOMContentLoaded', function() {
+    foodDetailsModal = new bootstrap.Modal(document.getElementById('foodDetailsModal'));
+});
+
 //fetches calorie data from the backend
 async function fetchCalories() {
     const response = await fetch(apiUrl);
@@ -13,6 +21,7 @@ async function fetchCalories() {
         dailyTarget = data.target;
     }
     
+    //displays the daily target
     document.getElementById('dailyTarget').textContent = dailyTarget > 0 ? dailyTarget : 'Not Set';
 
     //calculates and display the percentage of the daily target
@@ -29,6 +38,9 @@ async function fetchCalories() {
     data.foods.forEach((food, index) => {
         const li = document.createElement('li');
         li.innerHTML = `<b>${food.name}</b> &nbsp- ${food.calories} Calories`;
+        
+        li.classList.add('food-item-clickable');
+        li.addEventListener('click', () => showFoodDetails(food, index));
     
         const buttonContainer = document.createElement('div');
         buttonContainer.classList.add('button-container');
@@ -36,13 +48,19 @@ async function fetchCalories() {
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
         editButton.classList.add('edit');
-        editButton.onclick = () => editFood(index, food.name, food.calories);
+        editButton.onclick = (e) => {
+            e.stopPropagation();
+            editFood(index, food.name, food.calories);
+        };
         buttonContainer.appendChild(editButton);
     
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('delete');
-        deleteButton.onclick = () => deleteFood(index);
+        deleteButton.onclick = (e) => {
+            e.stopPropagation();
+            deleteFood(index);
+        };
         buttonContainer.appendChild(deleteButton);
     
         li.appendChild(buttonContainer);
@@ -115,7 +133,7 @@ async function updateFood(index, name, calories) {
     }
 }
 
-//deletes  food item
+//deletes food item
 async function deleteFood(index) {
     const response = await fetch(apiUrl + `log/${index}`, {
         method: 'DELETE',
@@ -133,6 +151,30 @@ function editFood(index, name, calories) {
     document.getElementById('foodName').value = name;
     document.getElementById('foodCalories').value = calories;
     editingFoodId = index; //sets the editing state
+    
+    //closes modal if open
+    if (foodDetailsModal) {
+        foodDetailsModal.hide();
+    }
+}
+//shows the food details in a modal
+function showFoodDetails(food, index) {
+    document.getElementById('modalFoodName').textContent = food.name;
+    document.getElementById('modalFoodCalories').textContent = food.calories + ' calories';
+    
+    if (dailyTarget > 0) {
+        const percentage = ((food.calories / dailyTarget) * 100).toFixed(2);
+        document.getElementById('modalFoodPercentage').textContent = percentage + '%';
+    } else {
+        document.getElementById('modalFoodPercentage').textContent = 'Set a daily target to see percentage';
+    }
+    
+    const editButton = document.getElementById('modalEditButton');
+    editButton.onclick = function() {
+        editFood(index, food.name, food.calories);
+    };
+    
+    foodDetailsModal.show();
 }
 
 //loads calorie data on page load

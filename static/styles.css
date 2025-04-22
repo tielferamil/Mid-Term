@@ -111,6 +111,20 @@ button:hover {
     width: 100%;
 }
 
+.food-item-clickable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.food-item-clickable:hover {
+    background-color: #f0f0f0 !important;
+}
+
+#foodList {
+    list-style-type: none;
+    padding: 0;
+}
+
 #foodList li {
     background-color: #ffffff;
     padding: 10px;
@@ -169,6 +183,10 @@ nav.navbar {
 
 button, .btn {
     border-radius: 50px !important;
+}
+
+.modal-footer{
+    justify-content: center !important;
 }
 
 /* Responsive Design */
