@@ -147,33 +147,33 @@ async function deleteFood(index) {
 }
 
 //populates the form with a food item's data for editing
-function editFood(index, name, calories) {
+function editFood(index, name, calories, recipe = '') {
     document.getElementById('foodName').value = name;
     document.getElementById('foodCalories').value = calories;
-    editingFoodId = index; //sets the editing state
-    
-    //closes modal if open
-    if (foodDetailsModal) {
-        foodDetailsModal.hide();
-    }
+    editingFoodId = index;
+
+    if (foodDetailsModal) foodDetailsModal.hide();
 }
+
 //shows the food details in a modal
 function showFoodDetails(food, index) {
     document.getElementById('modalFoodName').textContent = food.name;
     document.getElementById('modalFoodCalories').textContent = food.calories + ' calories';
-    
-    if (dailyTarget > 0) {
-        const percentage = ((food.calories / dailyTarget) * 100).toFixed(2);
-        document.getElementById('modalFoodPercentage').textContent = percentage + '%';
-    } else {
-        document.getElementById('modalFoodPercentage').textContent = 'Set a daily target to see percentage';
-    }
-    
-    const editButton = document.getElementById('modalEditButton');
-    editButton.onclick = function() {
-        editFood(index, food.name, food.calories);
+    document.getElementById('modalFoodRecipe').value = food.recipe || "";
+
+    const percentage = (dailyTarget > 0)
+        ? ((food.calories / dailyTarget) * 100).toFixed(2) + '%'
+        : 'Set a daily target to see percentage';
+    document.getElementById('modalFoodPercentage').textContent = percentage;
+
+    document.getElementById('modalEditButton').onclick = function () {
+        editFood(index, food.name, food.calories, food.recipe);
     };
-    
+
+    document.getElementById('saveRecipeButton').onclick = function () {
+        saveRecipe(index);
+    };
+
     foodDetailsModal.show();
 }
 
