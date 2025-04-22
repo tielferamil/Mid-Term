@@ -9,6 +9,12 @@ async function fetchCalories() {
     const totalCalories = data.totalCalories;
     document.getElementById('totalCalories').textContent = totalCalories;
 
+    if (data.target > 0) {
+        dailyTarget = data.target;
+    }
+    
+    document.getElementById('dailyTarget').textContent = dailyTarget > 0 ? dailyTarget : 'Not Set';
+
     //calculates and display the percentage of the daily target
     if (dailyTarget === 0) {
         document.getElementById('caloriePercentage').textContent = "Set a target to see percentage";
@@ -51,8 +57,11 @@ async function setCalorieTarget() {
         await fetch(apiUrl + 'target', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ target: Number(dailyTarget) })
+            body: JSON.stringify(Number(dailyTarget))
         });
+        
+        document.getElementById('dailyTarget').textContent = dailyTarget;
+        
         fetchCalories();
     } else {
         alert("Please enter a valid calorie target.");

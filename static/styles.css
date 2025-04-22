@@ -93,7 +93,8 @@ button:hover {
 }
 
 #totalCalories,
-#caloriePercentage {
+#caloriePercentage,
+#dailyTarget {
     font-weight: bold;
     color: #27ae60;
 }
