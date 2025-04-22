@@ -4,6 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List
+from pymongo import MongoClient
 
 app = FastAPI()
 
@@ -18,10 +19,12 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+
 # data model for a food item
 class FoodItem(BaseModel):
     name: str
     calories: int
+
 
 # data model for calorie tracking
 class CalorieData(BaseModel):
@@ -29,26 +32,31 @@ class CalorieData(BaseModel):
     foods: List[FoodItem] = []
     totalCalories: int = 0
 
+
 # in-memory database for calorie data
 calorie_data = CalorieData()
+
 
 # serve the frontend HTML file
 @app.get("/", response_class=HTMLResponse)
 def serve_frontend():
     with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read())
-    
+
+
 # serve the goals page
 @app.get("/goals", response_class=HTMLResponse)
 def serve_goals_page():
     with open("frontend/goals.html", "r") as file:
         return HTMLResponse(content=file.read())
-    
+
+
 # serve the recipes page
 @app.get("/recipes", response_class=HTMLResponse)
 def serve_goals_page():
     with open("frontend/recipes.html", "r") as file:
         return HTMLResponse(content=file.read())
+
 
 # serve the profile page
 @app.get("/profile", response_class=HTMLResponse)
@@ -56,11 +64,13 @@ def serve_goals_page():
     with open("frontend/profile.html", "r") as file:
         return HTMLResponse(content=file.read())
 
+
 # sets the daily calorie target
 @app.post("/calories/target")
 def set_calorie_target(target: int):
     calorie_data.target = target
     return {"message": "Calorie target set", "target": target}
+
 
 # logs a new food item
 @app.post("/calories/log")
@@ -68,6 +78,7 @@ def log_food(food: FoodItem):
     calorie_data.foods.append(food)
     calorie_data.totalCalories += food.calories
     return {"message": "Food logged", "food": food}
+
 
 # updates an existing food item
 @app.put("/calories/log/{food_id}")
@@ -86,6 +97,7 @@ def update_food(food_id: int, updated_food: FoodItem):
 
     return {"message": "Food updated", "food": updated_food}
 
+
 # deletes a food item
 @app.delete("/calories/log/{food_id}")
 def delete_food(food_id: int):
@@ -98,10 +110,12 @@ def delete_food(food_id: int):
 
     return {"message": "Food deleted", "food": deleted_food}
 
+
 # retrieves all calorie data
 @app.get("/calories/")
 def get_calories():
     return calorie_data
+
 
 # resets all calorie data
 @app.delete("/calories/reset")
@@ -110,3 +124,27 @@ def reset_calories():
     calorie_data.foods = []
     calorie_data.totalCalories = 0
     return {"message": "Calorie data reset"}
+
+
+app = FastAPI()
+
+# Connect to MongoDB
+client = MongoClient(
+    "mongodb+srv://tielferamil:KHp0Wvip8ohKtawk@cluster0.9mh9yk6.mongodb.net/"
+)
+db = client["nutritrack"]
+users_collection = db["users"]
+
+
+@app.get("/")
+def home():
+    return {"message": "NutriTrack is working!"}
+
+
+@app.get("/test-db")
+def test_db_connection():
+    try:
+        count = users_collection.count_documents({})
+        return {"status": "success", "user_count": count}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
