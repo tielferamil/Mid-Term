@@ -7,12 +7,3 @@ client = MongoClient(
 )
 db = client["nutritrack"]
 users_collection = db["users"]
-
-
-@app.get("/test-db")
-def test_db_connection():
-    try:
-        count = users_collection.count_documents({})
-        return {"status": "success", "user_count": count}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
