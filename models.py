@@ -1,32 +1,19 @@
-from pydantic import BaseModel
-from typing import List
-from typing import Optional
 from beanie import Document
+from pydantic import BaseModel
+from typing import Optional
+from bson import ObjectId
 
 
-# model for a food item
-class FoodItem(BaseModel):
-    name: str
-    calories: int
-    recipe: Optional[str] = None
-
-
-# model for calorie tracking data
-class CalorieData(BaseModel):
-    target: int = 0
-    foods: List[FoodItem] = []
-    totalCalories: int = 0
-
-
-# Define user model
+# User document stored in MongoDB
 class User(Document):
     username: str
     hashed_password: str
 
     class Settings:
-        name = "users"
+        name = "users"  # MongoDB collection name
 
 
+# Request schemas (not stored directly)
 class UserSignup(BaseModel):
     username: str
     password: str
@@ -35,3 +22,19 @@ class UserSignup(BaseModel):
 class UserLogin(BaseModel):
     username: str
     password: str
+
+
+# A food item from frontend
+class FoodItem(BaseModel):
+    name: str
+    calories: int
+
+
+# Food log stored per user
+class FoodLog(Document):
+    user_id: ObjectId
+    name: str
+    calories: int
+
+    class Settings:
+        name = "foodlogs"  # MongoDB collection name
