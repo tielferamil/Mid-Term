@@ -1,71 +1,79 @@
-<!DOCTYPE html> 
-<html lang="en">  
-<head>     
-    <meta charset="UTF-8">     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
-    <title>Calorie Tracker</title>     
-    <link rel="stylesheet" href="/static/styles.css">     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">       
-</head>  
-<body>     
-    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 m-0">         
-        <div class="container-fluid justify-content-between">           
-            <a class="navbar-brand" href="#">NutriTrack</a>           
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">             
-                <span class="navbar-toggler-icon"></span>           
-            </button>           
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">             
-                <ul class="navbar-nav">               
-                    <li class="nav-item">                 
-                        <a class="nav-link" aria-current="page" href="/goals">Goals</a>                             
-                    </li>               
-                    <li class="nav-item">                 
-                        <a class="nav-link" href="/recipes">Recipes</a>               
-                    </li>               
-                    <li class="nav-item">                 
-                        <a class="nav-link" href="/profile">Profile</a>               
-                    </li>             
-                </ul>           
-            </div>         
-        </div>       
-    </nav>      
-    
-    <h3><b>Dashboard</b></h3>      
-    
-    <div class="container">         
-        <!-- left side -->         
-        <div class="left-column">             
-            <h2>Set Daily Calorie Target</h2>             
-            <form id="calorieForm">                 
-                <input type="number" id="calorieTarget" placeholder="Daily Calorie Target" min="1" required />                 
-                <button type="button" onclick="setCalorieTarget()">Set Target</button>             
-            </form>              
-            
-            <h2>Log Food</h2>             
-            <form id="foodForm">                 
-                <input type="text" id="foodName" placeholder="Food Name" required />                 
-                <input type="number" id="foodCalories" placeholder="Calories" min="1" required />                 
-                <button type="button" onclick="logFood()">Log Food</button>             
-            </form>         
-        </div>          
-        
-        <!-- right side -->         
-        <div class="right-column">             
-            <h2>Calorie Intake</h2>             
-            <div class="calorie-stats">                 
-                <p><b>Daily Calorie Target:</b> <span id="dailyTarget">Not Set</span></p>                 
-                <p><b>Total Calories Consumed:</b> <span id="totalCalories"></span></p>                 
-                <p><b>Percentage of Daily Target:</b> <span id="caloriePercentage">Set a target to see percentage</span></p>             
-            </div>             
-            <div class="food-log-container">                 
-                <h2>Food Log</h2>                 
-                <ul id="foodList"></ul>             
-            </div>                      
-        </div>     
-    </div>     
-    
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 m-0">
+        <div class="container-fluid justify-content-between">
+            <a class="navbar-brand" href="#">NutriTrack</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/goals">Goals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h3><b>Dashboard</b></h3>
+
+    <div class="container">
+        <!-- left side -->
+        <div class="left-column">
+            <h2>Set Daily Calorie Target</h2>
+            <form id="calorieForm">
+                <input type="number" id="calorieTarget" placeholder="Daily Calorie Target" min="1" required />
+                <button type="button" onclick="setCalorieTarget()">Set Target</button>
+            </form>
+
+            <h2>Log Food</h2>
+            <form id="foodForm">
+                <input type="text" id="foodName" placeholder="Food Name" required />
+                <input type="number" id="foodCalories" placeholder="Calories" min="1" required />
+                <button type="button" onclick="logFood()">Log Food</button>
+            </form>
+        </div>
+
+        <!-- right side -->
+        <div class="right-column">
+            <h2>Calorie Intake</h2>
+            <div class="calorie-stats">
+                <p><b>Daily Calorie Target:</b> <span id="dailyTarget">Not Set</span></p>
+                <p><b>Total Calories Consumed:</b> <span id="totalCalories"></span></p>
+                <p><b>Percentage of Daily Target:</b> <span id="caloriePercentage">Set a target to see percentage</span>
+                </p>
+            </div>
+            <div class="food-log-container">
+                <h2>Food Log</h2>
+                <ul id="foodList"></ul>
+            </div>
+        </div>
+    </div>
+
     <!-- Food Details Modal -->
-    <div class="modal fade" id="foodDetailsModal" tabindex="-1" aria-labelledby="foodDetailsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="foodDetailsModal" tabindex="-1" aria-labelledby="foodDetailsModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -86,9 +94,9 @@
                         <p id="modalFoodPercentage"></p>
                     </div>
                     <div class="mb-3">
-                      <h6><b>Recipe (optional):</b></h6>
-                      <textarea id="modalFoodRecipe" rows="4" class="form-control"></textarea>
-                  </div>                  
+                        <h6><b>Recipe (optional):</b></h6>
+                        <textarea id="modalFoodRecipe" rows="4" class="form-control"></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" id="saveRecipeButton">Save Recipe</button>
@@ -97,8 +105,9 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="static/main.js"></script> 
-</body> 
+    <script src="static/main.js"></script>
+</body>
+
 </html>
